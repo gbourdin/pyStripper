@@ -1,3 +1,4 @@
+# coding=utf-8
 #    pyStripper is an open-source nfo stripper written in python
 #
 #    Copyright (C) 2012  German Bourdin - James Baumeister

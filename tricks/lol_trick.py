@@ -1,4 +1,4 @@
-import re
+# coding=utf-8
 
 
 def lol_trick(data):

@@ -1,3 +1,4 @@
+# coding=utf-8
 from NFOStripper import NFOStripper
 import os
 import config
