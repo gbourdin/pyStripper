@@ -16,11 +16,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from tricks.amiable_trick import amiable_trick
-from tricks.lol_trick import lol_trick
-from tricks.ftp_trick import ftp_trick
-from tricks.c4tv_trick import c4tv_trick
-from tricks.psychd_trick import psychd_trick
+from tricks import (amiable_trick, lol_trick, ftp_trick,
+                    c4tv_trick, psychd_trick)
 
 
 def nfo_tricks(data):
