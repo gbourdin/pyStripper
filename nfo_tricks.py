@@ -19,6 +19,7 @@ from tricks.amiable_trick import amiable_trick
 from tricks.lol_trick import lol_trick
 from tricks.ftp_trick import ftp_trick
 from tricks.c4tv_trick import c4tv_trick
+from tricks.psychd_trick import psychd_trick
 
 
 def nfo_tricks(data):
@@ -27,5 +28,6 @@ def nfo_tricks(data):
     data = lol_trick(data)
     data = ftp_trick(data)
     data = c4tv_trick(data)
+    data = psychd_trick(data)
 
     return data
