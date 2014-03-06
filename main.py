@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# coding=utf-8
 
 #    pyStripper is an open-source nfo stripper written in python
 #
@@ -55,7 +55,7 @@ def main():
 
     args = parser.parse_args()
 
-    if args.input != None:
+    if args.input:
         args.input = os.path.abspath(args.input)
 
         if not os.path.isfile(args.input) or not is_readable(args.input):
@@ -69,7 +69,7 @@ def main():
 
         config.INPUT_FILE = args.input
 
-    if args.output != None:
+    if args.output:
         args.output = os.path.abspath(args.output)
 
         if os.path.isfile(args.output) and not is_writeable(args.output):
@@ -82,7 +82,7 @@ def main():
         # Crete the output file (if it doesn't exist)
         try:
             open(args.output, 'w')
-        except(IOError):
+        except IOError:
             sys.stderr.write("Could not create/open {0}\n".format(args.output))
             sys.exit(1)
 
@@ -94,7 +94,7 @@ def main():
     if args.dontstrip:
         config.STRIP = False
 
-    if args.promo != None:
+    if args.promo:
         config.PROMO = True
         config.PROMO_TEXT = args.promo
 

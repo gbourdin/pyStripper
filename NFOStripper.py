@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# coding=utf-8
 
 #    pyStripper is an open-source nfo stripper written in python
 #
@@ -26,8 +26,10 @@ from nfo_tricks import nfo_tricks
 EXTRA_SPACES = re.compile('  +')  # This doesn't include \t and that's fine
 BEGINS_WITH_SPACES = re.compile('^( +|\t+)', re.M)
 INLINE_REPETITIONS = re.compile('(.)(\\1{4,})')
-VERTICAL_REPETITIONS_A = re.compile(r'(^[^\[^\]^\n^\r-])' + '(.*)(\n)+((\\1(.*)(\n)+){4,})', re.M)
-VERTICAL_REPETITIONS_B = re.compile(r'([^\[^\]^\n^\r-]$)(\n)+' + '((.*)\\1(\n)+){4,}', re.M)
+VERTICAL_REPETITIONS_A = re.compile(
+    r'(^[^\[^\]^\n^\r-])' + '(.*)(\n)+((\\1(.*)(\n)+){4,})', re.M)
+VERTICAL_REPETITIONS_B = re.compile(
+    r'([^\[^\]^\n^\r-]$)(\n)+' + '((.*)\\1(\n)+){4,}', re.M)
 BLANKLINES = re.compile('^(\r*\n){2,}', re.M)
 PRE_TAGS = re.compile(r'\[/?pre\s*\]')
 
@@ -36,22 +38,22 @@ class NFOStripper(object):
 
     def __init__(self):
 
-        if config.INPUT_FILE != None:
+        if config.INPUT_FILE:
             try:
                 input_stream = open(config.INPUT_FILE, 'r')
-            except(IOError):
+            except IOError:
                 sys.exit(1)
         else:
             input_stream = sys.stdin
 
         self.data = input_stream.read(config.FILE_MAX_SIZE)  # Read at most 1MB
 
-        if config.INPUT_FILE != None:  # Careful do not close stdin!
+        if config.INPUT_FILE:  # Careful do not close stdin!
             input_stream.close()
 
     def strip(self):
 
-        if config.STRIP == True:
+        if config.STRIP:
 
             # For groups using ascii to mark stuff instead of X.
             self.data = re.sub('[\xc2\x95]', 'X', self.data)
@@ -78,23 +80,31 @@ class NFOStripper(object):
             self.data = re.sub(BLANKLINES, '\n', self.data)
 
             # Remove 5+ iterations of the same character in the same line
-            while (len(re.findall(INLINE_REPETITIONS, self.data)) > 0):
+            while len(re.findall(INLINE_REPETITIONS, self.data)) > 0:
                 self.data = re.sub(INLINE_REPETITIONS, '', self.data)
 
             # Get 5+ vertical repetitions of the same character at
             # the beggining of the line
-            while (len(re.findall(VERTICAL_REPETITIONS_A, self.data)) > 0):
-                exp = re.compile('(^' +
-                                re.escape(re.findall(VERTICAL_REPETITIONS_A,
-                                                     self.data)[0][0]) +
-                                ')(.*)(\n)', re.M)
+            while len(re.findall(VERTICAL_REPETITIONS_A, self.data)) > 0:
+                exp = re.compile(
+                    '(^' +
+                    re.escape(
+                        re.findall(VERTICAL_REPETITIONS_A, self.data)[0][0]
+                    ) +
+                    ')(.*)(\n)',
+                    re.M
+                )
                 self.data = re.sub(exp, r'\2\3', self.data)
 
-            while (len(re.findall(VERTICAL_REPETITIONS_B, self.data)) > 0):
-                exp = re.compile('(.*)(' +
-                                 re.escape(re.findall(VERTICAL_REPETITIONS_B,
-                                                      self.data)[0][0]) +
-                                 '$)(\n)', re.M)
+            while len(re.findall(VERTICAL_REPETITIONS_B, self.data)) > 0:
+                exp = re.compile(
+                    '(.*)(' +
+                    re.escape(
+                        re.findall(VERTICAL_REPETITIONS_B, self.data)[0][0]
+                    ) +
+                    '$)(\n)',
+                    re.M
+                )
                 self.data = re.sub(exp, r'\1\3', self.data)
 
             # Add a space between : and http:// if necessary.
@@ -105,7 +115,7 @@ class NFOStripper(object):
             # complete or delete them.
             self.data = re.sub(PRE_TAGS, '', self.data)
 
-            if config.PRE == True:
+            if config.PRE:
                 self.data = "[pre]" + self.data + "[/pre]"
 
             # Extra run for extra spacing introduced by the stripper:
@@ -119,15 +129,15 @@ class NFOStripper(object):
 
     def write_output(self):
 
-        if config.OUTPUT_FILE != None:
+        if config.OUTPUT_FILE:
             try:
                 output_stream = open(config.OUTPUT_FILE, 'w')
-            except(IOError):
+            except IOError:
                 sys.exit(1)
         else:
             output_stream = sys.stdout
 
         output_stream.write(self.data)
 
-        if config.OUTPUT_FILE != None:  # Careful do not close stdout!
+        if config.OUTPUT_FILE:  # Careful do not close stdout!
             output_stream.close()
