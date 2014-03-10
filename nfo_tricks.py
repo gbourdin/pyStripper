@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from tricks import (amiable_trick, lol_trick, ftp_trick,
-                    c4tv_trick, psychd_trick)
+                    c4tv_trick, psychd_trick, invandraren_trick)
 
 
 def nfo_tricks(data):
@@ -27,5 +27,6 @@ def nfo_tricks(data):
     data = ftp_trick(data)
     data = c4tv_trick(data)
     data = psychd_trick(data)
+    data = invandraren_trick(data)
 
     return data
