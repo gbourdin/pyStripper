@@ -22,11 +22,12 @@ from tricks import (amiable_trick, lol_trick, ftp_trick,
 
 def nfo_tricks(data):
     """ This function runs all the special ripping tricks on data. """
+    # Order matters, invandraren has to be run before amiable
+    data = invandraren_trick(data)
     data = amiable_trick(data)
     data = lol_trick(data)
     data = ftp_trick(data)
     data = c4tv_trick(data)
     data = psychd_trick(data)
-    data = invandraren_trick(data)
 
     return data
