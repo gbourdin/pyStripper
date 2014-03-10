@@ -17,11 +17,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from tricks import (amiable_trick, lol_trick, ftp_trick,
-                    c4tv_trick, psychd_trick)
+                    c4tv_trick, psychd_trick, invandraren_trick)
 
 
 def nfo_tricks(data):
     """ This function runs all the special ripping tricks on data. """
+    # Order matters, invandraren has to be run before amiable
+    data = invandraren_trick(data)
     data = amiable_trick(data)
     data = lol_trick(data)
     data = ftp_trick(data)
