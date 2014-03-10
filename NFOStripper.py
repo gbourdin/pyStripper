@@ -111,9 +111,13 @@ class NFOStripper(object):
             self.data = self.data.replace(":http://", ": http://")
 
             # It's easier to just remove them, and re-add them iif necessary
-            # rather than checking for incomple tags and checking wether to
+            # rather than checking for incomplete tags and checking whether to
             # complete or delete them.
             self.data = re.sub(PRE_TAGS, '', self.data)
+
+            # Add promo text before enclosing with tags
+            if config.PROMO == True:
+                self.data += "\n" + config.PROMO_TEXT
 
             if config.PRE:
                 self.data = "[pre]" + self.data + "[/pre]"
